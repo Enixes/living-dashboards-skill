@@ -1,0 +1,12 @@
+@keyframes living-float{0%,100%{translate:0 0}50%{translate:0 -2px}}
+@keyframes living-text{0%,100%{translate:0 0}50%{translate:0 -.65px}}
+@keyframes living-breathe{0%,100%{opacity:.88}50%{opacity:1}}
+@keyframes living-travel{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@keyframes living-turn{to{rotate:360deg}}
+
+[data-motion-level=max][data-page-visible=true] [data-life][data-in-view=true]{animation:living-float 6s ease-in-out infinite;animation-delay:var(--life-delay,0s)}
+[data-motion-level=max][data-page-visible=true] [data-life-text][data-in-view=true]{animation:living-text 4s ease-in-out infinite;animation-delay:var(--life-delay,0s)}
+[data-motion-level=max] [data-life]:is(:hover,:focus-within){animation-play-state:paused!important}
+[data-motion-level=off] *,[data-motion-level=off] *:before,[data-motion-level=off] *:after,[data-motion-level=reduced] *,[data-motion-level=reduced] *:before,[data-motion-level=reduced] *:after{animation:none!important;transition:none!important}
+[data-page-visible=false] *,[data-page-visible=false] *:before,[data-page-visible=false] *:after{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}

@@ -1,0 +1,59 @@
+/* Add to the existing design system; dashboard-tokens.css supplies optional defaults. */
+:root, [data-theme="nature"] {
+  --ld-ground: #d2d9bc; --ld-middle: #7e9871; --ld-top: #365841;
+  --ld-edge: #f1f5dc; --ld-line: #b6d29b; --ld-shadow: rgb(23 45 35 / 24%);
+  --ld-shape: 42% 28% 36% 22%;
+}
+[data-theme="abstract"] {
+  --ld-ground: #e8d6c3; --ld-middle: #e68b65; --ld-top: #493bb0;
+  --ld-edge: #fff0db; --ld-line: #c7bdf7; --ld-shadow: rgb(60 37 73 / 23%);
+  --ld-shape: 4% 4% 4% 4%;
+}
+[data-theme="cyberpunk"] {
+  --ld-ground: #173c4a; --ld-middle: #265968; --ld-top: #13313f;
+  --ld-edge: #83fff0; --ld-line: #5adddf; --ld-shadow: rgb(0 5 18 / 60%);
+  --ld-shape: 8% 2% 8% 2%;
+}
+.ld-scene { position: relative; isolation: isolate; }
+.ld-stage {
+  position: relative; width: min(100%, 21rem); aspect-ratio: 1;
+  transform-style: preserve-3d; pointer-events: none;
+  transform: perspective(950px) rotateX(calc(20deg + var(--ld-rx, 0deg))) rotateY(calc(-24deg + var(--ld-ry, 0deg)));
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1);
+}
+.ld-layer {
+  position: absolute; border-radius: var(--ld-shape); border: 1px solid var(--ld-edge);
+  box-shadow: 5px 8px 0 var(--ld-middle), 14px 24px 30px var(--ld-shadow);
+  transform-style: preserve-3d; overflow: hidden;
+}
+.ld-base { inset: 23% 4% 2% 4%; background: var(--ld-ground); transform: translateZ(0); }
+.ld-mid { inset: 13% 12% 12% 12%; background: var(--ld-middle); transform: translateZ(24px); }
+.ld-top { inset: 4% 22% 24% 18%; background: var(--ld-top); transform: translateZ(52px); }
+.ld-layer::after {
+  content: ''; position: absolute; inset: 8%; border-radius: inherit;
+  border: 1px solid var(--ld-line); opacity: .6;
+  background: repeating-radial-gradient(ellipse at 70% 70%, transparent 0 13px, var(--ld-line) 14px 15px, transparent 16px 27px);
+}
+[data-theme="abstract"] .ld-layer::after {
+  border-radius: 0; background: linear-gradient(140deg, transparent 43%, var(--ld-line) 43% 44%, transparent 44% 67%, var(--ld-line) 67% 68%, transparent 68%);
+}
+[data-theme="cyberpunk"] .ld-layer::after {
+  background: linear-gradient(90deg, var(--ld-line) 1px, transparent 1px), linear-gradient(var(--ld-line) 1px, transparent 1px);
+  background-size: 24px 24px; opacity: .22;
+}
+.ld-foreground { position: relative; z-index: 1; }
+/* Flat preserves the composition and information, removing perspective and elevation. */
+[data-depth="flat"] .ld-stage { transform: none; transform-style: flat; }
+[data-depth="flat"] .ld-layer { transform: none; box-shadow: none; }
+/* Stop spatial transitions immediately; static depth can remain. */
+[data-depth-motion="reduced"] .ld-stage, [data-depth-motion="off"] .ld-stage,
+[data-motion="reduced"] .ld-stage, [data-motion="off"] .ld-stage { transition: none; }
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .ld-stage { transition: none; }
+}
+@media (max-width: 600px) {
+  .ld-stage { width: min(100%, 16rem); }
+}
+@supports not (transform-style: preserve-3d) {
+  .ld-stage, .ld-layer { transform: none; }
+}

@@ -1,0 +1,14 @@
+interface:
+  display_name: Living Dashboards
+  short_description: Living dashboards with continuous motion, 3D, and themes
+  default_prompt: Use $living-dashboards to create a beautiful dashboard with sculpted
+    3D depth, distinctive themes, and continuous Max motion with pause controls.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
